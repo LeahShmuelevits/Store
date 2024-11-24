@@ -18,12 +18,13 @@ namespace Services
             return _iuserRepository.PostLoginR(username, password);
         }
         public User Post(User user)
-        {
+        {            //check password strength
+
             return _iuserRepository.Post(user);
         }
 
         public void Put(int id, User user)
-        {
+        {  //check password strength
             _iuserRepository.Put(id, user);
         }
 

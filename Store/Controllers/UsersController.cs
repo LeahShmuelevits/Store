@@ -47,7 +47,7 @@ namespace Store.Controllers
         [HttpPost]
         public ActionResult<User> PostNewUser([FromBody] User user)
         {
-            if (_iuserservice.CheckPassword(user.Password) < 4)
+            if (_iuserservice.CheckPassword(user.Password) < 4)//not here, in services
             {
                 return BadRequest();
             }
@@ -62,7 +62,7 @@ namespace Store.Controllers
         [HttpPost("CheckPassword")]
         public ActionResult<int> CheckPassword([FromBody] string password)
         {
-           var res =  _iuserservice.CheckPassword(password);
+           var res =  _iuserservice.CheckPassword(password);//not here, in services
             if (res <4)
                 return BadRequest(res);
             return Ok(res);
