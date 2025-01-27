@@ -8,7 +8,7 @@ const load = addEventListener("load", async () => {
 
 const drawCart = async () => {
     price=0
-    for (let i = 0; i < cart.length; i++) {
+    for (let i = 0; i < cart.length; i++) {//forEach is nicer
         price+=cart[i].price
         drawOneItem(cart[i])
     }

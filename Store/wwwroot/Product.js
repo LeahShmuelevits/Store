@@ -30,13 +30,13 @@ const getData = async () => {
 }
 
 
-const filterProducts=() => {
+const filterProducts = () => {//why do you need this function? call drawProductList
     drawProductList()
 }
 
 const drawProductList = async () => {
     
-    let categoryIds1 = JSON.parse(sessionStorage.getItem("categories"))//const?
+    let categoryIds1 = JSON.parse(sessionStorage.getItem("categories"))//const?//build url in a seperated func
 
     let { nameSearch, minPrice, maxPrice } = await getData();
     let url = "api/products"
@@ -49,7 +49,7 @@ const drawProductList = async () => {
     if (maxPrice != '')
         url += `&maxPrice=${maxPrice}`
     if (categoryIds1.length != 0) {
-        for (let i = 0; i < categoryIds1.length; i++)
+        for (let i = 0; i < categoryIds1.length; i++)//forEach is nicer
             url += `&categoryIds=${categoryIds1[i]}`
     }
       
@@ -78,11 +78,11 @@ const drawProductList = async () => {
 
 }
 const showAllProducts = async (products) => {
-    for (let i = 0; i < products.length; i++) {
+    for (let i = 0; i < products.length; i++) {//forEach is nicer
         showOneProduct(products[i])
     }
 }
-const drowCategory = async () => {
+const drowCategory = async () => {//getCategories- this func is a get function
     try {
         const allCategories = await fetch("api/Categories", {
             method: 'Get',
