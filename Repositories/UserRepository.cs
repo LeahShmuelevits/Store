@@ -29,10 +29,12 @@ namespace Repositories
         public async Task<User> Post(User user)
         {
             await _ManagerDbContext.Users.AddAsync(user);
+            //var res=await _ManagerDbContext.Users.AddAsync(user);
             await _ManagerDbContext.SaveChangesAsync();
+            //return res- the created user with the id
             return user; 
         }
-        public async Task Put(int id, User user1)
+        public async Task Put(int id, User user1)//return user
         {
               _ManagerDbContext.Users.Update(user1);
               await _ManagerDbContext.SaveChangesAsync();
