@@ -26,9 +26,9 @@ namespace Store.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> Get()
         {
-            IEnumerable<Category> category= await _icategoryService.Get();
-            IEnumerable<CategoryDTO> categoryDTO= _imapper.Map <IEnumerable<Category>, IEnumerable < CategoryDTO >>(category);
-            if(categoryDTO!=null)
+            IEnumerable<Category> category = await _icategoryService.Get();
+            IEnumerable<CategoryDTO> categoryDTO = _imapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(category);
+            if (categoryDTO != null)
                 return Ok(categoryDTO);
             return NoContent();
 

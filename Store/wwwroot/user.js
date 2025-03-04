@@ -47,10 +47,9 @@ const login = async () => {
         console.log(data)
         const dataLogin = await data.json()
         console.log('post data',dataLogin)
-        //sessionStorage
         sessionStorage.setItem("userId", dataLogin.userId)
         window.location.href = 'Products.html'
-        //window.location.href = 'userDetails.html'
+       
 
     }
     catch (error) {
@@ -72,12 +71,21 @@ const seeTheUpdateUser = () => {
 const register = async () => {
     const user = getDataFromRegister()
     console.log(user.password.length)
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(user.username)) {
-        alert("The username must be a valid email address.");
-        return;
-    }
-    try {      
+    try {   
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(user.username)) {
+            alert("The username must be a valid email address.");
+            return;
+        }
+        if (user.username.length > 50) {
+            throw new Error("Username maximum 50")
+        }
+        if (user.password < 5 || user.password > 20) {
+            throw new Error("password must be between 5 to 20")
+        }
+        if (user.username == null || user.password == null) {
+            throw new Error("This fields are requierd")
+        }
         const postFromData = await fetch("api/Users", {
             method: 'POST',
             headers: {
@@ -85,7 +93,6 @@ const register = async () => {
             },
             body: JSON.stringify(user)
         });
-       
         if (postFromData.status == 400) {
             alert("cant register with bad password")
         }
@@ -100,6 +107,20 @@ const updateUser = async () => {
     console.log(sessionStorage.getItem("userId"))
     const user = getDataFromUpdate()
     try {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(user.username)) {
+            alert("The username must be a valid email address.");
+            return;
+        }
+        if (user.username.length > 50) {
+            throw new Error("Username maximum 50")
+        }
+        if (user.password < 5 || user.password > 20) {
+            throw new Error("password must be between 5 to 20")
+        }
+        if (user.username == null || user.password == null) {
+            throw new Error("This fields are requierd")
+        }
         console.log(sessionStorage.getItem("userId"))
         const updateFromData = await fetch(`api/Users/${sessionStorage.getItem("userId")}`, {
             method: 'PUT',
@@ -110,6 +131,9 @@ const updateUser = async () => {
         });
         if (updateFromData.status == 400) {
             throw new Error("all fields are required")
+        }
+        if (updateFromData.status == 404) {
+            throw new Error("cant update with bad password")
         }
         alert(`user ${sessionStorage.getItem("userId")} update`)
     }
@@ -141,6 +165,6 @@ const CheckPassword = async () => {
         console.log(data)
         progress.value = data
     } catch (error) {
-       //rdyhhs
+       
     }
 }

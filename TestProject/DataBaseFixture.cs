@@ -1,27 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Entities;
+﻿
 using Microsoft.EntityFrameworkCore;
-using Moq;
-using Moq.EntityFrameworkCore;
 using Repositories;
 
 namespace TestProject
 {
-    public class DataBaseFixture
+    public class DataBaseFixture : IDisposable
     {
-       public ManagerDbContext Context { get; private set; }
+        public ManagerDbContext Context { get; private set; }
         public DataBaseFixture()
         {
             var options = new DbContextOptionsBuilder<ManagerDbContext>()
-                .UseSqlServer("Server=SRV2\\PUPILS;Database=ManagerDB;Trusted_Connection=True;")
+                .UseSqlServer("Server=srv2\\pupils;Database=Test_Store_Project;Trusted_Connection=True;TrustServerCertificate=True")
                 .Options;
+
             Context = new ManagerDbContext(options);
+            Context.Database.EnsureDeleted();
             Context.Database.EnsureCreated();
+
         }
+
         public void Dispose()
         {
             Context.Database.EnsureDeleted();
@@ -29,3 +26,4 @@ namespace TestProject
         }
     }
 }
+

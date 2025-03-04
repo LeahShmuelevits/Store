@@ -28,14 +28,16 @@ namespace Repositories
 
         public async Task<User> Post(User user)
         {
-            await _ManagerDbContext.Users.AddAsync(user);
+           var user1=  await _ManagerDbContext.Users.AddAsync(user);
             await _ManagerDbContext.SaveChangesAsync();
-            return user; 
+           
+            return user1.Entity; 
         }
-        public async Task Put(int id, User user1)
+        public async Task<User> Put(int id, User user1)
         {
-              _ManagerDbContext.Users.Update(user1);
+            var user=_ManagerDbContext.Users.Update(user1);
               await _ManagerDbContext.SaveChangesAsync();
+            return user.Entity;
         }
     }
 }

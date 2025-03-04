@@ -24,11 +24,6 @@ namespace Store.Controllers
 
         // GET: api/<Product>
         [HttpGet]
-        //public async Task<ActionResult<IEnumerable<Product>>> Get()
-        //{
-        //    return await _iproductService.Get();
-        //}
-
         public async Task<ActionResult<IEnumerable<Product>>> Get([FromQuery]string? desc, [FromQuery] int? minPrice, [FromQuery] int? maxPrice, [FromQuery] int?[] categoryIds)
         {
             IEnumerable<Product> product = await _iproductService.Get(desc, minPrice, maxPrice, categoryIds);

@@ -18,14 +18,14 @@ document.querySelector("#ItemsCountText").innerHTML = cart.length
 
 const getData = async () => {
 
-    
+
 
     document.getElementById("PoductList").innerHTML = ''
 
     const minPrice = document.querySelector("#minPrice").value
     const maxPrice = document.querySelector("#maxPrice").value
     const nameSearch = document.querySelector("#nameSearch").value
-    
+
     return { nameSearch, minPrice, maxPrice }
 }
 
@@ -35,7 +35,7 @@ const filterProducts=() => {
 }
 
 const drawProductList = async () => {
-    
+
     let categoryIds1 = JSON.parse(sessionStorage.getItem("categories"))//const?
 
     let { nameSearch, minPrice, maxPrice } = await getData();
@@ -52,7 +52,7 @@ const drawProductList = async () => {
         for (let i = 0; i < categoryIds1.length; i++)
             url += `&categoryIds=${categoryIds1[i]}`
     }
-      
+
     try {
         const allProducts = await fetch(url, {
             method: 'Get',
@@ -116,21 +116,21 @@ const showOneCategory = async (category) => {
     cloneProduct.querySelector(".OptionName").textContent = category.categoryName
     cloneProduct.querySelector(".opt").addEventListener('change', () => {chooseCategories(category.id) })//איך לכץתוב את הID
     document.getElementById("categoryList").appendChild(cloneProduct)
- 
+
 }
 
 const chooseCategories = (categoryId) => {
     let categoriesTmp = JSON.parse(sessionStorage.getItem("categories"))
     let index = categoriesTmp.indexOf(categoryId)
-    if (index == -1) 
+    if (index == -1)
         categoriesTmp.push(categoryId)
-    else 
+    else
         categoriesTmp.splice(index, 1)
     sessionStorage.setItem("categories", JSON.stringify(categoriesTmp))
     drawProductList()
     }
-     
-    
+
+
 
 const showOneProduct = async (product) => {
     let tmp = document.getElementById("temp-card");
@@ -151,5 +151,12 @@ const addToCart = (product) => {
     sessionStorage.setItem("cart", JSON.stringify(cartTemp))
     document.querySelector("#ItemsCountText").innerHTML=cartTemp.length
 }
-
-
+const toUpdate = () => {
+    if (!JSON.parse(sessionStorage.getItem("userId"))) {
+        alert("you have not logged in yet");
+        window.location.href = "login.html";
+    }
+    else {
+        window.location.href = "userDetails.html";
+    }
+}

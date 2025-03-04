@@ -16,7 +16,7 @@ public partial class User
     [StringLength(50, ErrorMessage = "UserName max 50")]
     public string UserName { get; set; } = null!;
 
-    //[StringLength(20, ErrorMessage = "name between 5-20", MinimumLength = 5)]
+    [StringLength(20, ErrorMessage = "password between 5-20", MinimumLength = 5)]
     [Required]
     public string Password { get; set; } = null!;
 

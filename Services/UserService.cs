@@ -29,9 +29,12 @@ namespace Services
             return await _iuserRepository.GetById(id);
         }
         
-        public async Task Put(int id, User user)
+        public async Task<User> Put(int id, User user)
         {
-           await _iuserRepository.Put(id, user);
+            int resPassword = CheckPassword(user.Password);
+            if (resPassword < 4)
+                return null;
+            return await _iuserRepository.Put(id, user);
         }
 
         public int CheckPassword(string password)

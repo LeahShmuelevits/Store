@@ -23,43 +23,6 @@ namespace Store.Controllers
         }
 
 
-        // GET api/<OrdersController>/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Order>> Get(int id)
-        //{
-        //    Order order=await _iorderService.GetById(id);
-        //   if(order==null)
-        //        return NoContent();
-        //    return Ok(order);
-
-        //}
-
-
-
-
-
-
-        // POST api/<OrdersController>
-        //[HttpPost]
-        //public async Task<ActionResult<Order>> Post([FromBody] Order order)
-        //{
-        //    Order order1 = await _iorderService.Post(order);
-
-        //    if (order1 == null)
-        //        return NoContent();
-        //    return Ok(order1);
-        //}
-
-        //public async Task<ActionResult<OrderDTO>> Post([FromBody] OrderDTO order)
-        //{
-
-        //    Order order1= _imapper.Map<OrderDTO, Order>(order);
-        //    await _iorderService.Post(order1);
-        //    if (order1 == null)
-        //        return NoContent();
-        //    return Ok(order1);
-        //}
-
         [HttpPost]
         public async Task<ActionResult<GetOrderDTO>> Post([FromBody] OrderDTO order)
         {

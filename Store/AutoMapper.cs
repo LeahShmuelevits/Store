@@ -20,9 +20,5 @@ namespace Store
 
         }
 
-
-
-
-
     }
 }

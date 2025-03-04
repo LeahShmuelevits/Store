@@ -1,4 +1,5 @@
 ﻿using Entities;
+using System.Threading.Tasks;
 
 namespace Repositories
 {
@@ -6,7 +7,7 @@ namespace Repositories
     {
         Task<User> Post(User user);
         Task<User> PostLoginR(string username, string password);
-        Task Put(int id, User user1);
+        Task<User> Put(int id, User user1);
         Task<User> GetById(int id);
     }
 }
