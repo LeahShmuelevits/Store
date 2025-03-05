@@ -33,7 +33,7 @@ namespace Store.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetById(int id)
+        public async Task<ActionResult<GetUserDTO>> GetById(int id)
         {
             User user = await _iuserservice.GetById(id);
             GetUserDTO userDTO = _imapper.Map<User, GetUserDTO>(user);
@@ -44,7 +44,7 @@ namespace Store.Controllers
         }
 
         //POST api/<UsersController>0w
-       [HttpPost]
+        [HttpPost]
        [Route("login")]
         public async Task<ActionResult<GetUserDTO>> PostLogin([FromQuery] string username,string password)
         {
@@ -61,19 +61,19 @@ namespace Store.Controllers
         }
 
 
+
         [HttpPost]
         public async Task<ActionResult<GetUserDTO>> PostNewUser([FromBody] UserDTO user)
         {
             User user1 = _imapper.Map<UserDTO, User>(user);
             User newUser = await _iuserservice.Post(user1);
             if (newUser == null)
-                return BadRequest();
+                return UnprocessableEntity();
             GetUserDTO newUser1 = _imapper.Map<User, GetUserDTO>(newUser);
             if (newUser1 != null)
                 return Ok(newUser1);
             return NoContent();
         }
-
 
 
         // PUT api/<UsersController>/5
@@ -84,11 +84,12 @@ namespace Store.Controllers
             User user2=await _iuserservice.Put(id, user1);
             if (user2 == null)
             {
-                return NotFound();
+                return BadRequest();
             }
             GetUserDTO newUser = _imapper.Map<User, GetUserDTO>(user2);
             return Ok(newUser);
         }
+
 
         [HttpPost("CheckPassword")]
         public ActionResult<int> CheckPassword([FromBody] string password)
@@ -98,6 +99,7 @@ namespace Store.Controllers
 
 
         }
+
 
     }
 }

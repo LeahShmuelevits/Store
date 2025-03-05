@@ -16,10 +16,10 @@ namespace Repositories
         }
 
         public async Task<User> PostLoginR(string username, string password)
-        {
-            User user = await _ManagerDbContext.Users.FirstOrDefaultAsync(user => user.UserName == username && user.Password == password);
-            return user;
+        { 
+           return await _ManagerDbContext.Users.FirstOrDefaultAsync(user => user.UserName == username && user.Password == password); 
         }
+
 
         public async Task<User> GetById(int id)
         {
@@ -33,12 +33,16 @@ namespace Repositories
            
             return user1.Entity; 
         }
+
+
         public async Task<User> Put(int id, User user1)
         {
+            user1.UserId = id;  
             var user=_ManagerDbContext.Users.Update(user1);
               await _ManagerDbContext.SaveChangesAsync();
             return user.Entity;
         }
+
     }
 }
 

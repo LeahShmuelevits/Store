@@ -12,10 +12,11 @@ namespace Services
             _iuserRepository = iuserRepository;
         }
 
-        public Task<User> PostLoginS(string username, string password)
+        public async Task<User> PostLoginS(string username, string password)
         {
-            return _iuserRepository.PostLoginR(username, password);
+            return await _iuserRepository.PostLoginR(username, password);
         }
+        
         public async Task<User> Post(User user)
         {
             int resPassword = CheckPassword(user.Password);
@@ -28,7 +29,8 @@ namespace Services
         {
             return await _iuserRepository.GetById(id);
         }
-        
+
+
         public async Task<User> Put(int id, User user)
         {
             int resPassword = CheckPassword(user.Password);

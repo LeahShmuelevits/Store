@@ -1,27 +1,19 @@
 ﻿
-//לשנות לפי הערות של פנסטר גם את הפונציה של השינו וגם להעביר את הבדיקה מהקונרולר לסרביס
-
 const load = addEventListener("load", async () => {
     drawProductList()
     getCategories()
 })
 
-
-//enter to a new function?
-let categories = []//let?
+let categories = []
 let cart = JSON.parse(sessionStorage.getItem("cart"))||[]
 sessionStorage.setItem("categories", JSON.stringify(categories))
 sessionStorage.setItem("cart", JSON.stringify(cart))
 document.querySelector("#ItemsCountText").innerHTML = cart.length
 
-//sessionStorage.setItem("cart", JSON.stringify(cart))
+
 
 const getData = async () => {
-
-
-
     document.getElementById("PoductList").innerHTML = ''
-
     const minPrice = document.querySelector("#minPrice").value
     const maxPrice = document.querySelector("#maxPrice").value
     const nameSearch = document.querySelector("#nameSearch").value
@@ -36,14 +28,14 @@ const filterProducts=() => {
 
 const drawProductList = async () => {
 
-    let categoryIds1 = JSON.parse(sessionStorage.getItem("categories"))//const?
+    let categoryIds1 = JSON.parse(sessionStorage.getItem("categories"))
 
     let { nameSearch, minPrice, maxPrice } = await getData();
     let url = "api/products"
     if (nameSearch || minPrice || maxPrice || categoryIds1)
         url += '?'
     if (nameSearch != '')
-        url += `&desc=${nameSearch}`//מה זה הDESC
+        url += `&desc=${nameSearch}`
     if (minPrice != '')
         url += `&minPrice=${minPrice}`
     if (maxPrice != '')
@@ -66,7 +58,7 @@ const drawProductList = async () => {
                 categoryIds:categoryIds1
             }
         });
-        if (allProducts.ok) {//לעשות עוד סטטוסים
+        if (allProducts.ok) {
             const dataProducts = await allProducts.json()
             console.log("dataProducts", dataProducts)
             showAllProducts(dataProducts)
@@ -90,7 +82,7 @@ const getCategories = async () => {
                 'Content-Type': 'application/json'
             }
         });
-        if (allCategories.ok) {//לעשות עוד סטטוסים(לבדוק אם אין קטגוריות שיביא מערך ריק?)
+        if (allCategories.ok) {
             const dataCategories = await allCategories.json()
             console.log("dataCategories", dataCategories)
             showAllCategories(dataCategories)
@@ -114,7 +106,7 @@ const showOneCategory = async (category) => {
     let tmp = document.getElementById("temp-category");
     let cloneProduct = tmp.content.cloneNode(true)
     cloneProduct.querySelector(".OptionName").textContent = category.categoryName
-    cloneProduct.querySelector(".opt").addEventListener('change', () => {chooseCategories(category.id) })//איך לכץתוב את הID
+    cloneProduct.querySelector(".opt").addEventListener('change', () => {chooseCategories(category.id) })
     document.getElementById("categoryList").appendChild(cloneProduct)
 
 }

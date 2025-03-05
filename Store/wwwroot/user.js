@@ -94,10 +94,17 @@ const register = async () => {
             body: JSON.stringify(user)
         });
         if (postFromData.status == 400) {
+            alert("all fields are required")
+        }
+        if (postFromData.status == 422) {
             alert("cant register with bad password")
         }
+
         const dataPost = await postFromData.json()
         console.log('post data', dataPost)
+        alert(`user num ${dataPost.userId} sucsseful register please login now!!!!!!!!!!!!!`)
+
+       
     }
     catch (error) {
         alert(error)
@@ -130,12 +137,10 @@ const updateUser = async () => {
             body: JSON.stringify(user)
         });
         if (updateFromData.status == 400) {
-            throw new Error("all fields are required")
-        }
-        if (updateFromData.status == 404) {
             throw new Error("cant update with bad password")
         }
         alert(`user ${sessionStorage.getItem("userId")} update`)
+         window.location.href = 'Products.html'
     }
     catch (error) {
         alert(error)
