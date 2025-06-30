@@ -3,11 +3,14 @@ using DTO;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Store.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase

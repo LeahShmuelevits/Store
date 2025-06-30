@@ -5,11 +5,13 @@ using Entities;
 using AutoMapper;
 using DTO;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Store.Controllers
 {
-    
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -17,10 +19,13 @@ namespace Store.Controllers
         IMapper _imapper;
         IUserService _iuserservice ;
          private readonly ILogger<UsersController> _logger;
-        public UsersController(IUserService iuserservice, IMapper imapper, ILogger<UsersController> logger)
-        {   _logger = logger;
+        private readonly IConfiguration _configuration;
+        public UsersController(IUserService iuserservice, IMapper imapper, ILogger<UsersController> logger, IConfiguration configuration)
+        {
+            _logger = logger;
             _imapper = imapper;
             _iuserservice = iuserservice;
+            _configuration = configuration;
         }
         
         
@@ -46,17 +51,17 @@ namespace Store.Controllers
         //POST api/<UsersController>0w
         [HttpPost]
        [Route("login")]
-        public async Task<ActionResult<GetUserDTO>> PostLogin([FromQuery] string username,string password)
+        [AllowAnonymous]
+        public async Task<ActionResult<object>> PostLogin([FromQuery] string username, string password)
         {
-            //where we will put the ask of the null?
-            User user = await _iuserservice.PostLoginS(username, password);
-            GetUserDTO userDTO = _imapper.Map<User, GetUserDTO>(user);
-            if (userDTO != null)
+            var (user, token) = await _iuserservice.PostLoginS(username, password);
+            if (user != null)
             {
                 _logger.LogCritical($"Login attempted with User name-{username} and with password-{password}");
+                GetUserDTO userDTO = _imapper.Map<User, GetUserDTO>(user);
+                Response.Cookies.Append("jwt_token", token, new CookieOptions { HttpOnly = true, SameSite = SameSiteMode.Strict });
                 return Ok(userDTO);
             }
-               
             return NoContent();
         }
 
@@ -99,6 +104,8 @@ namespace Store.Controllers
 
 
         }
+
+  
 
 
     }
